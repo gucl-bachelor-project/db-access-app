@@ -1,0 +1,24 @@
+FROM node:alpine
+
+## Install bash
+RUN apk update && apk upgrade && apk add bash
+
+## Add the wait script to the image
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.7.3/wait /wait
+RUN chmod +x /wait
+
+WORKDIR /app
+
+RUN npm install sequelize sequelize-cli mysql2
+
+COPY . .
+
+ENV APP_DB_USERNAME ""
+ENV APP_DB_PASSWORD ""
+ENV APP_DB_NAME ""
+ENV DB_HOSTNAME ""
+ENV DB_PORT ""
+
+WORKDIR /app
+
+CMD /wait && npx sequelize db:migrate

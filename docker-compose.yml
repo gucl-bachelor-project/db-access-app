@@ -1,0 +1,22 @@
+version: "3.5"
+
+networks:
+  db-access-app-network:
+    name: db-access-app-network
+
+x-db-access-app: &db-access-app
+  networks:
+    - db-access-app-network
+
+services:
+  db-access-app-1:
+    <<: *db-access-app
+
+  db-access-app-admin-1:
+    <<: *db-access-app
+
+  db-access-app-2:
+    <<: *db-access-app
+
+  db-access-app-admin-2:
+    <<: *db-access-app

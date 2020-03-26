@@ -1,0 +1,20 @@
+FROM node:alpine
+
+## Install bash
+RUN apk update && apk upgrade && apk add bash
+
+## Add the wait script to the image
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.7.3/wait /wait
+RUN chmod +x /wait
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm ci --only=production
+
+COPY ./src ./src
+
+EXPOSE 8080
+
+CMD /wait && npm start

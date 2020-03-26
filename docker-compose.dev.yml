@@ -1,0 +1,110 @@
+version: "3.5"
+
+volumes:
+  nodemodules_db_access:
+    external: true
+  nodemodules_db_access_admin:
+    external: true
+
+networks:
+  log-app-network:
+    external: true
+
+x-db-access-app: &db-access-app
+  build:
+    context: ./db-access
+    dockerfile: ../dockerfiles/Dockerfile-node-app-dev
+  expose:
+    - 8080
+  working_dir: /app
+  command: bash -c "/wait && npm run dev"
+  volumes:
+    - ./db-access:/app
+    - nodemodules_db_access:/app/node_modules
+  depends_on:
+    - mysql-db
+  networks:
+    - log-app-network
+
+x-db-access-admin-app: &db-access-admin-app
+  build:
+    context: ./db-access-admin
+    dockerfile: ../dockerfiles/Dockerfile-node-app-dev
+  expose:
+    - 8080
+  working_dir: /app
+  command: bash -c "/wait && npm run dev"
+  volumes:
+    - ./db-access-admin:/app
+    - nodemodules_db_access_admin:/app/node_modules
+  depends_on:
+    - mysql-db
+  networks:
+    - log-app-network
+
+services:
+  db-access-app-1:
+    <<: *db-access-app
+    environment:
+      - NODE_ENV=development
+      - WAIT_HOSTS=mysql-db:33060
+      - APP_DB_NAME=app_db_1
+      - LOG_APP_URL=log-app:8080
+    ports:
+      - 5000:8080
+
+  db-access-app-admin-1:
+    <<: *db-access-admin-app
+    environment:
+      - NODE_ENV=development
+      - WAIT_HOSTS=mysql-db:33060
+      - APP_DB_NAME=app_db_1
+      - LOG_APP_URL=log-app:8080
+    ports:
+      - 5001:8080
+
+  db-access-app-2:
+    <<: *db-access-app
+    environment:
+      - NODE_ENV=development
+      - WAIT_HOSTS=mysql-db:33060
+      - APP_DB_NAME=app_db_2
+      - LOG_APP_URL=log-app:8080
+    ports:
+      - 6000:8080
+
+  db-access-app-admin-2:
+    <<: *db-access-admin-app
+    environment:
+      - NODE_ENV=development
+      - WAIT_HOSTS=mysql-db:33060
+      - APP_DB_NAME=app_db_2
+      - LOG_APP_URL=log-app:8080
+    ports:
+      - 6001:8080
+
+  mysql-db:
+    image: mysql:8
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    expose:
+      - 33060
+    networks:
+      - db-access-app-network
+    volumes:
+      - ./data:/var/lib/mysql
+      - ./database/docker-init-scripts:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_USER: test-user
+      MYSQL_PASSWORD: test-password
+      MYSQL_ROOT_PASSWORD: password
+
+  adminer:
+    image: adminer
+    restart: always
+    networks:
+      - db-access-app-network
+    depends_on:
+      - mysql-db
+    ports:
+      - 9095:8080

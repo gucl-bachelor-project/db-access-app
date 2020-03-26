@@ -1,0 +1,60 @@
+version: "3.5"
+
+x-db-access-app: &db-access-app
+  image: ${DB_ACCESS_REPO_URL}
+
+x-db-access-admin-app: &db-access-admin-app
+  image: ${DB_ACCESS_ADMIN_REPO_URL}
+
+services:
+  db-access-app-1:
+    <<: *db-access-app
+    ports:
+      - 8080:8080
+    environment:
+      - NODE_ENV=production
+      - APP_DB_USERNAME=${APP_DB_USERNAME}
+      - APP_DB_PASSWORD=${APP_DB_PASSWORD}
+      - APP_DB_NAME=${APP_DB_1_NAME}
+      - DB_HOSTNAME=${DB_HOSTNAME}
+      - DB_PORT=${DB_PORT}
+      - LOG_APP_URL=${LOGGING_APP_HOST_URL}
+
+  db-access-app-admin-1:
+    <<: *db-access-admin-app
+    ports:
+      - 8081:8080
+    environment:
+      - NODE_ENV=production
+      - APP_DB_USERNAME=${APP_DB_USERNAME}
+      - APP_DB_PASSWORD=${APP_DB_PASSWORD}
+      - APP_DB_NAME=${APP_DB_1_NAME}
+      - DB_HOSTNAME=${DB_HOSTNAME}
+      - DB_PORT=${DB_PORT}
+      - LOG_APP_URL=${LOGGING_APP_HOST_URL}
+
+  db-access-app-2:
+    <<: *db-access-app
+    ports:
+      - 9080:8080
+    environment:
+      - NODE_ENV=production
+      - APP_DB_USERNAME=${APP_DB_USERNAME}
+      - APP_DB_PASSWORD=${APP_DB_PASSWORD}
+      - APP_DB_NAME=${APP_DB_2_NAME}
+      - DB_HOSTNAME=${DB_HOSTNAME}
+      - DB_PORT=${DB_PORT}
+      - LOG_APP_URL=${LOGGING_APP_HOST_URL}
+
+  db-access-app-admin-2:
+    <<: *db-access-admin-app
+    ports:
+      - 9081:8080
+    environment:
+      - NODE_ENV=production
+      - APP_DB_USERNAME=${APP_DB_USERNAME}
+      - APP_DB_PASSWORD=${APP_DB_PASSWORD}
+      - APP_DB_NAME=${APP_DB_2_NAME}
+      - DB_HOSTNAME=${DB_HOSTNAME}
+      - DB_PORT=${DB_PORT}
+      - LOG_APP_URL=${LOGGING_APP_HOST_URL}
