@@ -1,0 +1,281 @@
+openapi: 3.0.0
+info:
+  title: DB access application REST API
+  version: 1.0.0
+servers:
+  - url: /
+paths:
+  /api/users:
+    get:
+      tags:
+        - users
+      summary: Get all users
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Users"
+    post:
+      tags:
+        - users
+      summary: Save user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserCreate"
+        required: true
+      responses:
+        "201":
+          description: Saved user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inline_response_201"
+        "400":
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: Invalid request payload
+                example: Missing property 'first_name'
+  /api/documents:
+    get:
+      tags:
+        - documents
+      summary: Get all documents
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Documents"
+    post:
+      tags:
+        - documents
+      summary: Save document
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DocumentCreate"
+        required: true
+      responses:
+        "201":
+          description: Saved document
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inline_response_201_1"
+        "400":
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                $ref: "#/components/schemas/inline_response_400"
+  /api/configs:
+    get:
+      tags:
+        - configs
+      summary: Get all configs
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Configs"
+    post:
+      tags:
+        - configs
+      summary: Save config
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ConfigCreate"
+        required: true
+      responses:
+        "201":
+          description: Saved config
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/inline_response_201_2"
+        "400":
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: Invalid request payload
+                example: Missing property 'enabled'
+components:
+  schemas:
+    Users:
+      type: array
+      items:
+        $ref: "#/components/schemas/User"
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID of user
+          example: 12
+        first_name:
+          type: string
+          description: First name of user
+          example: Gustav
+        last_name:
+          type: string
+          description: Last name of user
+          example: Clausen
+        gender:
+          type: string
+          description: Gender of user
+          enum:
+            - male
+            - female
+            - other
+    UserCreate:
+      required:
+        - first_name
+        - gender
+        - last_name
+      type: object
+      properties:
+        first_name:
+          type: string
+          description: First name of user
+          example: Gustav
+        last_name:
+          type: string
+          description: Last name of user
+          example: Clausen
+        gender:
+          type: string
+          description: Gender of user
+          enum:
+            - male
+            - female
+            - other
+    Documents:
+      type: array
+      items:
+        $ref: "#/components/schemas/Document"
+    DocumentCreate:
+      required:
+        - author_user_id
+        - content
+        - pub_date
+        - title
+      type: object
+      properties:
+        title:
+          type: string
+          description: Title of document
+          example: My new document
+        content:
+          type: string
+          description: Content of document
+          example: Hey there!
+        pub_date:
+          type: string
+          description: Timestamp of publish date
+          format: date-time
+          example: 2020-03-27T07:38:08Z
+        author_user_id:
+          type: integer
+          description: ID of user to set as author
+          example: 12
+    Document:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID of document
+          example: 2
+        title:
+          type: string
+          description: Title of document
+          example: My new document
+        content:
+          type: string
+          description: Content of document
+          example: Hey there!
+        pub_date:
+          type: string
+          description: Timestamp of publish date
+          format: date-time
+          example: 2020-03-27T07:38:08Z
+        author_user_id:
+          type: integer
+          description: ID of user to set as author
+          example: 12
+    Configs:
+      type: array
+      items:
+        $ref: "#/components/schemas/Config"
+    ConfigCreate:
+      required:
+        - enabled
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of config
+          example: Feature toggle 1
+        enabled:
+          type: boolean
+          description: If config should be enabled or not
+          example: true
+    Config:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID of config
+          example: 6
+        name:
+          type: string
+          description: Name of config
+          example: Feature toggle 1
+        enabled:
+          type: boolean
+          description: If config is enabled or not
+          example: true
+    inline_response_201:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID of created user
+          example: 12
+    inline_response_201_1:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID of created document
+          example: 12
+    inline_response_400:
+      oneOf:
+        - type: string
+          description: Invalid request payload
+          example: Missing property 'pub_date'
+        - type: string
+          description: Author with user ID does not exist
+          example: User with provided id (12) does not exist.
+    inline_response_201_2:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID of created config
+          example: 24
