@@ -1,6 +1,7 @@
 setup:
 	docker volume create nodemodules_db_access
 	docker volume create nodemodules_db_access_admin
+	docker network create log-app-network || true
 
 install:
 	docker-compose -f ./db-access/docker-compose.builder.yml run --rm install
