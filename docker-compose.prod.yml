@@ -1,14 +1,14 @@
 version: "3.5"
 
-x-db-access-app: &db-access-app
-  image: ${DB_ACCESS_REPO_URL}
+x-db-administration-app: &db-administration-app
+  image: ${DB_ADMINISTRATION_APP_REPO_URL}
 
-x-db-access-admin-app: &db-access-admin-app
-  image: ${DB_ACCESS_ADMIN_REPO_URL}
+x-db-admin-administration-app: &db-admin-administration-app
+  image: ${DB_ADMIN_ADMINISTRATION_APP_REPO_URL}
 
 services:
-  db-access-app-1:
-    <<: *db-access-app
+  db-administration-app-1:
+    <<: *db-administration-app
     ports:
       - 8080:8080
     environment:
@@ -20,8 +20,8 @@ services:
       - DB_PORT=${DB_PORT}
       - LOG_APP_URL=${LOGGING_APP_HOST_URL}
 
-  db-access-app-admin-1:
-    <<: *db-access-admin-app
+  db-admin-administration-app-1:
+    <<: *db-admin-administration-app
     ports:
       - 8081:8080
     environment:
@@ -33,8 +33,8 @@ services:
       - DB_PORT=${DB_PORT}
       - LOG_APP_URL=${LOGGING_APP_HOST_URL}
 
-  db-access-app-2:
-    <<: *db-access-app
+  db-administration-app-2:
+    <<: *db-administration-app
     ports:
       - 9080:8080
     environment:
@@ -46,8 +46,8 @@ services:
       - DB_PORT=${DB_PORT}
       - LOG_APP_URL=${LOGGING_APP_HOST_URL}
 
-  db-access-app-admin-2:
-    <<: *db-access-admin-app
+  db-admin-administration-app-2:
+    <<: *db-admin-administration-app
     ports:
       - 9081:8080
     environment:

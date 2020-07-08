@@ -1,14 +1,14 @@
 version: "2.1"
 
 volumes:
-  nodemodules_db_access:
+  nodemodules_db_administration:
     external: true
 
 services:
   base:
     image: node:alpine
     volumes:
-      - nodemodules_db_access:/app/node_modules
+      - nodemodules_db_administration:/app/node_modules
       - .:/app
     working_dir: /app
 

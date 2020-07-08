@@ -1,7 +1,7 @@
 const express = require("express");
 const db = require('../models');
 const validateReq = require("../middleware/validate");
-const { validateCreation: validateConfigCreation } = require('../models/config');
+const {validateCreation: validateConfigCreation} = require('../models/config');
 
 const router = express.Router();
 
@@ -18,7 +18,7 @@ router.post('/', [validateReq(validateConfigCreation)], async (req, res) => {
         enabled: req.body.enabled
     });
 
-    return res.status(201).send({ id: createdConfig.id });
+    return res.status(201).send({id: createdConfig.id});
 });
 
 module.exports = router;

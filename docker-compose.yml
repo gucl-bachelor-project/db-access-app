@@ -1,22 +1,22 @@
 version: "3.5"
 
 networks:
-  db-access-app-network:
-    name: db-access-app-network
+  persistence-network:
+    name: persistence-network
 
-x-db-access-app: &db-access-app
+x-db-administration-app: &db-administration-app
   networks:
-    - db-access-app-network
+    - persistence-network
 
 services:
-  db-access-app-1:
-    <<: *db-access-app
+  db-administration-app-1:
+    <<: *db-administration-app
 
-  db-access-app-admin-1:
-    <<: *db-access-app
+  db-admin-administration-app-1:
+    <<: *db-administration-app
 
-  db-access-app-2:
-    <<: *db-access-app
+  db-administration-app-2:
+    <<: *db-administration-app
 
-  db-access-app-admin-2:
-    <<: *db-access-app
+  db-admin-administration-app-2:
+    <<: *db-administration-app

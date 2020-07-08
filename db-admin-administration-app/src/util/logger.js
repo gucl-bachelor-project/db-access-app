@@ -14,7 +14,7 @@ class LoggingServiceTransport extends Transport {
     postToLogService(data, logResourcePath) {
         axios
             .post(`http://${process.env.LOG_APP_URL}/log/${logResourcePath}`, {
-                appName: "db-access",
+                appName: "db-access-admin",
                 timestamp: new Date().toISOString(),
                 data: data
             })
@@ -45,7 +45,7 @@ class LoggingServiceTransport extends Transport {
     }
 }
 
-var logger = winston.createLogger({
+const logger = winston.createLogger({
     level: process.env.NODE_ENV === "production" ? "info" : "debug",
     format: winston.format.json(),
     transports: [

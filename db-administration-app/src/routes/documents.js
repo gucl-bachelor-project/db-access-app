@@ -1,7 +1,7 @@
 const express = require("express");
 const db = require('../models');
 const validateReq = require("../middleware/validate");
-const { validateCreation: validateDocumentCreation } = require('../models/document');
+const {validateCreation: validateDocumentCreation} = require('../models/document');
 
 const router = express.Router();
 
@@ -24,7 +24,7 @@ router.post('/', [validateReq(validateDocumentCreation)], async (req, res) => {
         author_user_id: author.id
     });
 
-    return res.status(201).send({ id: createdDocument.id });
+    return res.status(201).send({id: createdDocument.id});
 });
 
 module.exports = router;

@@ -7,5 +7,5 @@ const port = process.env.PORT || 8080;
 require('./startup/routes')(app);
 
 app.listen(port, () =>
-    console.log(`DB access app running on port ${port}`)
+    console.log(`DB admin administration app running on port ${port}`)
 );
