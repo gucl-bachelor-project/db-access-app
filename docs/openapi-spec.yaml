@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: DB access application REST API
+  title: DB Administration Web App REST API
   version: 1.0.0
 servers:
   - url: /
