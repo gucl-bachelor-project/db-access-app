@@ -18,7 +18,7 @@ services:
       - APP_DB_NAME=${APP_DB_1_NAME}
       - DB_HOSTNAME=${DB_HOSTNAME}
       - DB_PORT=${DB_PORT}
-      - LOG_APP_URL=${LOGGING_APP_HOST_URL}
+      - LOGGING_APP_URL=${LOGGING_APP_HOST_URL}
 
   db-admin-administration-app-1:
     <<: *db-admin-administration-app
@@ -31,7 +31,7 @@ services:
       - APP_DB_NAME=${APP_DB_1_NAME}
       - DB_HOSTNAME=${DB_HOSTNAME}
       - DB_PORT=${DB_PORT}
-      - LOG_APP_URL=${LOGGING_APP_HOST_URL}
+      - LOGGING_APP_URL=${LOGGING_APP_HOST_URL}
 
   db-administration-app-2:
     <<: *db-administration-app
@@ -44,7 +44,7 @@ services:
       - APP_DB_NAME=${APP_DB_2_NAME}
       - DB_HOSTNAME=${DB_HOSTNAME}
       - DB_PORT=${DB_PORT}
-      - LOG_APP_URL=${LOGGING_APP_HOST_URL}
+      - LOGGING_APP_URL=${LOGGING_APP_HOST_URL}
 
   db-admin-administration-app-2:
     <<: *db-admin-administration-app
@@ -57,4 +57,4 @@ services:
       - APP_DB_NAME=${APP_DB_2_NAME}
       - DB_HOSTNAME=${DB_HOSTNAME}
       - DB_PORT=${DB_PORT}
-      - LOG_APP_URL=${LOGGING_APP_HOST_URL}
+      - LOGGING_APP_URL=${LOGGING_APP_HOST_URL}

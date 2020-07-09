@@ -53,7 +53,7 @@ services:
       - NODE_ENV=development
       - WAIT_HOSTS=mysql-db:33060
       - APP_DB_NAME=app_db_1
-      - LOG_APP_URL=log-app:8080
+      - LOGGING_APP_URL=logging-app:8080
     ports:
       - 5000:8080
 
@@ -63,7 +63,7 @@ services:
       - NODE_ENV=development
       - WAIT_HOSTS=mysql-db:33060
       - APP_DB_NAME=app_db_1
-      - LOG_APP_URL=log-app:8080
+      - LOGGING_APP_URL=logging-app:8080
     ports:
       - 5001:8080
 
@@ -73,7 +73,7 @@ services:
       - NODE_ENV=development
       - WAIT_HOSTS=mysql-db:33060
       - APP_DB_NAME=app_db_2
-      - LOG_APP_URL=log-app:8080
+      - LOGGING_APP_URL=logging-app:8080
     ports:
       - 6000:8080
 
@@ -83,7 +83,7 @@ services:
       - NODE_ENV=development
       - WAIT_HOSTS=mysql-db:33060
       - APP_DB_NAME=app_db_2
-      - LOG_APP_URL=log-app:8080
+      - LOGGING_APP_URL=logging-app:8080
     ports:
       - 6001:8080
 
